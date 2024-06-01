@@ -54,7 +54,7 @@ namespace GooglePlayGames.BasicApi
             return false;
         }
 
-        public void RequestServerSideAccess(bool forceRefreshToken, Action<string> callback)
+        public void RequestServerSideAccess(string webClientId,bool forceRefreshToken, Action<string> callback)
         {
             LogUsage();
             if (callback != null)

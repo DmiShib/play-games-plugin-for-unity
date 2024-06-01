@@ -93,7 +93,7 @@ namespace GooglePlayGames.BasicApi
       /// <param name="forceRefreshToken">If {@code true} when the returned authorization code is exchanged a
       /// refresh token will be included in addition to an access token.</param>
       /// <param name="callback"></param>
-      void RequestServerSideAccess(bool forceRefreshToken, Action<string> callback);
+      void RequestServerSideAccess(string WebClientId, bool forceRefreshToken, Action<string> callback);
 
       /// <summary>
       /// Returns the authenticated user's ID. Note that this value may change if a user signs

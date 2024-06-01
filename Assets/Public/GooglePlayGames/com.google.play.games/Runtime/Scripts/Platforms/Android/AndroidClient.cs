@@ -179,19 +179,12 @@ namespace GooglePlayGames.Android
             }
         }
 
-        public void RequestServerSideAccess(bool forceRefreshToken, Action<string> callback)
+        public void RequestServerSideAccess(string WebClientId,bool forceRefreshToken, Action<string> callback)
         {
             callback = AsOnGameThreadCallback(callback);
 
-            if (!GameInfo.WebClientIdInitialized())
-            {
-                throw new InvalidOperationException("Requesting server side access requires web " +
-                                                    "client id to be configured.");
-            }
-
             using (var client = getGamesSignInClient())
-            using (var task = client.Call<AndroidJavaObject>("requestServerSideAccess",
-                GameInfo.WebClientId, forceRefreshToken))
+            using (var task = client.Call<AndroidJavaObject>("requestServerSideAccess", WebClientId, forceRefreshToken))
             {
                 AndroidTaskUtils.AddOnSuccessListener<string>(
                     task,

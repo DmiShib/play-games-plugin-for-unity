@@ -44,9 +44,6 @@ namespace GooglePlayGames.Editor
         public const string CLASSNAMEKEY = "proj.ConstantsClassName";
 
         /// <summary>Property key for project settings.</summary>
-        public const string WEBCLIENTIDKEY = "and.ClientId";
-
-        /// <summary>Property key for project settings.</summary>
         public const string ANDROIDRESOURCEKEY = "and.ResourceData";
 
         /// <summary>Property key for project settings.</summary>
@@ -78,9 +75,6 @@ namespace GooglePlayGames.Editor
         private const string CLASSNAMEPLACEHOLDER = "__Class__";
 
         /// <summary>Constant for token replacement</summary>
-        private const string WEBCLIENTIDPLACEHOLDER = "__WEB_CLIENTID__";
-
-        /// <summary>Constant for token replacement</summary>
         private const string PLUGINVERSIONPLACEHOLDER = "__PLUGIN_VERSION__";
 
         /// <summary>Constant for require google plus token replacement</summary>
@@ -108,7 +102,7 @@ namespace GooglePlayGames.Editor
         /// </summary>
         /// <remarks>The Games SDK requires additional metadata in the AndroidManifest.xml
         ///     file. </remarks>
-        private const string ManifestRelativePath = "Plugins/Android/GooglePlayGamesManifest.androidlib/AndroidManifest.xml";
+        private const string ManifestRelativePath = "Plugins/Android/GooglePlayGames/AndroidManifest.xml";
 
         private const string RootFolderName = "com.google.play.games";
 
@@ -215,7 +209,6 @@ namespace GooglePlayGames.Editor
                 {SERVICEIDPLACEHOLDER, SERVICEIDKEY},
                 {APPIDPLACEHOLDER, APPIDKEY},
                 {CLASSNAMEPLACEHOLDER, CLASSNAMEKEY},
-                {WEBCLIENTIDPLACEHOLDER, WEBCLIENTIDKEY},
                 {PLUGINVERSIONPLACEHOLDER, PLUGINVERSIONKEY},
                 // Causes the placeholder to be replaced with overridden value at runtime.
                 {NEARBY_PERMISSIONS_PLACEHOLDER, NEARBY_PERMISSIONS_PLACEHOLDER}

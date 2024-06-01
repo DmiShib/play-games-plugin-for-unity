@@ -325,7 +325,7 @@ namespace GooglePlayGames
         /// <param name="forceRefreshToken">If {@code true} when the returned authorization code is
         /// exchanged a refresh token will be included in addition to an access token.</param> <param
         /// name="callback"></param>
-        public void RequestServerSideAccess(bool forceRefreshToken, Action<string> callback)
+        public void RequestServerSideAccess(string webClientId,bool forceRefreshToken, Action<string> callback)
         {
             Misc.CheckNotNull(callback);
 
@@ -336,7 +336,7 @@ namespace GooglePlayGames
                 return;
             }
 
-            mClient.RequestServerSideAccess(forceRefreshToken, callback);
+            mClient.RequestServerSideAccess(webClientId, forceRefreshToken, callback);
         }
 
         /// <summary>

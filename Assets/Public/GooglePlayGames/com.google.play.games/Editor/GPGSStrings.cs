@@ -49,7 +49,6 @@ namespace GooglePlayGames.Editor
             public const string AppIdError = "The App Id does not appear to be valid. " +
                                              "It must consist solely of digits, usually 10 or more.";
 
-            public const string WebClientIdTitle = "Web App Client ID (Optional)";
             public const string ClientId = "Client ID";
 
             public const string ClientIdError = "The Client ID does not appear to be valid. " +
@@ -81,13 +80,6 @@ namespace GooglePlayGames.Editor
 
             public const string Blurb = "To configure Google Play Games in this project,\n" +
                                         "go to the Play Game console, then enter the information below and click on the Setup button.";
-
-            public const string WebClientIdBlurb =
-                "The web app client ID is needed to access the user's ID token and " +
-                "call other APIs onbehalf of the user." +
-                "  It is not required for Game Services.  Enter your oauth2 client ID below.\nTo obtain this " +
-                "ID, generate a web linked app in Developer Console. Example:\n" +
-                "123456789012-abcdefghijklm.apps.googleusercontent.com";
 
             public const string PkgName = "Package name";
 

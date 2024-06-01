@@ -50,11 +50,6 @@ namespace GooglePlayGames.Editor
         private string mConstantDirectory = "Assets";
 
         /// <summary>
-        /// The web client identifier.
-        /// </summary>
-        private string mWebClientId = string.Empty;
-
-        /// <summary>
         /// Menus the item for GPGS android setup.
         /// </summary>
         [MenuItem("Window/Google Play Games/Setup/Android setup...", false, 1)]
@@ -87,7 +82,6 @@ namespace GooglePlayGames.Editor
         /// <param name="nearbySvcId">Nearby svc identifier.</param>
         /// <param name="requiresGooglePlus">Indicates this app requires G+</param>
         public static bool PerformSetup(
-            string clientId,
             string classDirectory,
             string className,
             string resourceXmlData,
@@ -97,7 +91,6 @@ namespace GooglePlayGames.Editor
                 !string.IsNullOrEmpty(nearbySvcId))
             {
                 return PerformSetup(
-                    clientId,
                     GPGSProjectSettings.Instance.Get(GPGSUtil.APPIDKEY),
                     nearbySvcId);
             }
@@ -127,7 +120,6 @@ namespace GooglePlayGames.Editor
                     "MenuResolve", null);
 
                 return PerformSetup(
-                    clientId,
                     GPGSProjectSettings.Instance.Get(GPGSUtil.APPIDKEY),
                     nearbySvcId);
             }
@@ -138,30 +130,12 @@ namespace GooglePlayGames.Editor
         /// <summary>
         /// Provide static access to setup for facilitating automated builds.
         /// </summary>
-        /// <param name="webClientId">The oauth2 client id for the game.  This is only
-        /// needed if the ID Token or access token are needed.</param>
         /// <param name="appId">App identifier.</param>
         /// <param name="nearbySvcId">Optional nearby connection serviceId</param>
         /// <param name="requiresGooglePlus">Indicates that GooglePlus should be enabled</param>
         /// <returns>true if successful</returns>
-        public static bool PerformSetup(string webClientId, string appId, string nearbySvcId)
+        public static bool PerformSetup(string appId, string nearbySvcId)
         {
-            if (!string.IsNullOrEmpty(webClientId))
-            {
-                if (!GPGSUtil.LooksLikeValidClientId(webClientId))
-                {
-                    GPGSUtil.Alert(GPGSStrings.Setup.ClientIdError);
-                    return false;
-                }
-
-                string serverAppId = webClientId.Split('-')[0];
-                if (!serverAppId.Equals(appId))
-                {
-                    GPGSUtil.Alert(GPGSStrings.Setup.AppIdMismatch);
-                    return false;
-                }
-            }
-
             // check for valid app id
             if (!GPGSUtil.LooksLikeValidAppId(appId) && string.IsNullOrEmpty(nearbySvcId))
             {
@@ -180,7 +154,6 @@ namespace GooglePlayGames.Editor
             }
 
             GPGSProjectSettings.Instance.Set(GPGSUtil.APPIDKEY, appId);
-            GPGSProjectSettings.Instance.Set(GPGSUtil.WEBCLIENTIDKEY, webClientId);
             GPGSProjectSettings.Instance.Save();
             GPGSUtil.UpdateGameInfo();
 
@@ -215,7 +188,6 @@ namespace GooglePlayGames.Editor
             mConstantDirectory = settings.Get(GPGSUtil.CLASSDIRECTORYKEY, mConstantDirectory);
             mClassName = settings.Get(GPGSUtil.CLASSNAMEKEY, mClassName);
             mConfigData = settings.Get(GPGSUtil.ANDROIDRESOURCEKEY);
-            mWebClientId = settings.Get(GPGSUtil.WEBCLIENTIDKEY);
         }
 
         /// <summary>
@@ -271,17 +243,6 @@ namespace GooglePlayGames.Editor
             GUILayout.EndScrollView();
             GUILayout.Space(10);
 
-            // Client ID field
-            GUILayout.Label(GPGSStrings.Setup.WebClientIdTitle, EditorStyles.boldLabel);
-            GUILayout.Label(GPGSStrings.AndroidSetup.WebClientIdBlurb);
-
-            mWebClientId = EditorGUILayout.TextField(
-                GPGSStrings.Setup.ClientId,
-                mWebClientId,
-                GUILayout.MinWidth(450));
-
-            GUILayout.Space(10);
-
             GUILayout.FlexibleSpace();
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
@@ -301,6 +262,8 @@ namespace GooglePlayGames.Editor
                     GPGSUtil.Alert(
                         GPGSStrings.Error,
                         "Invalid classname: " + e.Message);
+                        
+                    Debug.LogException(e);
                 }
             }
 
@@ -320,7 +283,7 @@ namespace GooglePlayGames.Editor
         /// </summary>
         public void DoSetup()
         {
-            if (PerformSetup(mWebClientId, mConstantDirectory, mClassName, mConfigData, null))
+            if (PerformSetup(mConstantDirectory, mClassName, mConfigData, null))
             {
                 CheckBundleId();
 
