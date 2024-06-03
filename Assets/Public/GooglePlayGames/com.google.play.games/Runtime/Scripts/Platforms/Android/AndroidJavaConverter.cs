@@ -75,7 +75,7 @@ namespace GooglePlayGames.Android
             }
         }
 
-        internal static Player ToPlayer(AndroidJavaObject player)
+        internal static PlayGamesUserProfile ToPlayer(AndroidJavaObject player)
         {
             if (player == null)
             {
@@ -85,7 +85,7 @@ namespace GooglePlayGames.Android
             string displayName = player.Call<String>("getDisplayName");
             string playerId = player.Call<String>("getPlayerId");
             string avatarUrl = player.Call<String>("getIconImageUrl");
-            return new Player(displayName, playerId, avatarUrl);
+            return new PlayGamesUserProfile(displayName, playerId, avatarUrl);
         }
 
         internal static PlayerProfile ToPlayerProfile(AndroidJavaObject player) {

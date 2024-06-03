@@ -516,61 +516,6 @@ namespace GooglePlayGames.Editor
         }
 
         /// <summary>
-        /// Checks for the android manifest file exsistance.
-        /// </summary>
-        /// <returns><c>true</c>, if the file exists <c>false</c> otherwise.</returns>
-        public static bool AndroidManifestExists()
-        {
-            string destFilename = ManifestPath;
-
-            return File.Exists(destFilename);
-        }
-
-        /// <summary>
-        /// Generates the android manifest.
-        /// </summary>
-        public static void GenerateAndroidManifest()
-        {
-            string destFilename = ManifestPath;
-
-            // Generate AndroidManifest.xml
-            string manifestBody = GPGSUtil.ReadEditorTemplate("template-AndroidManifest");
-
-            Dictionary<string, string> overrideValues =
-                new Dictionary<string, string>();
-
-            if (!string.IsNullOrEmpty(GPGSProjectSettings.Instance.Get(SERVICEIDKEY)))
-            {
-                overrideValues[NEARBY_PERMISSIONS_PLACEHOLDER] =
-                    "        <!-- Required for Nearby Connections -->\n" +
-                    "        <uses-permission android:name=\"android.permission.BLUETOOTH\" />\n" +
-                    "        <uses-permission android:name=\"android.permission.BLUETOOTH_ADMIN\" />\n" +
-                    "        <uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\" />\n" +
-                    "        <uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\" />\n" +
-                    "        <uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />\n";
-                overrideValues[SERVICEID_ELEMENT_PLACEHOLDER] =
-                    "             <!-- Required for Nearby Connections API -->\n" +
-                    "             <meta-data android:name=\"com.google.android.gms.nearby.connection.SERVICE_ID\"\n" +
-                    "                  android:value=\"__NEARBY_SERVICE_ID__\" />\n";
-            }
-            else
-            {
-                overrideValues[NEARBY_PERMISSIONS_PLACEHOLDER] = "";
-                overrideValues[SERVICEID_ELEMENT_PLACEHOLDER] = "";
-            }
-
-            foreach (KeyValuePair<string, string> ent in replacements)
-            {
-                string value =
-                    GPGSProjectSettings.Instance.Get(ent.Value, overrideValues);
-                manifestBody = manifestBody.Replace(ent.Key, value);
-            }
-
-            GPGSUtil.WriteFile(destFilename, manifestBody);
-            GPGSUtil.UpdateGameInfo();
-        }
-
-        /// <summary>
         /// Writes the resource identifiers file.  This file contains the
         /// resource ids copied (downloaded?) from the play game app console.
         /// </summary>

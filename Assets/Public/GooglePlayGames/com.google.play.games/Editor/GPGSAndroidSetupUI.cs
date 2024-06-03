@@ -52,15 +52,14 @@ namespace GooglePlayGames.Editor
         /// <summary>
         /// Menus the item for GPGS android setup.
         /// </summary>
-        [MenuItem("Window/Google Play Games/Setup/Android setup...", false, 1)]
+        [MenuItem("Google/Play Games/Setup/Android setup...", false, 1)]
         public static void MenuItemFileGPGSAndroidSetup()
         {
-            EditorWindow window = EditorWindow.GetWindow(
-                typeof(GPGSAndroidSetupUI), true, GPGSStrings.AndroidSetup.Title);
+            var window = EditorWindow.GetWindow<GPGSAndroidSetupUI>(true, GPGSStrings.AndroidSetup.Title);
             window.minSize = new Vector2(500, 400);
         }
 
-        [MenuItem("Window/Google Play Games/Setup/Android setup...", true)]
+        [MenuItem("Google/Play Games/Setup/Android setup...", true)]
         public static bool EnableAndroidMenuItem()
         {
 #if UNITY_ANDROID
@@ -169,7 +168,7 @@ namespace GooglePlayGames.Editor
             }
 
             // Generate AndroidManifest.xml
-            GPGSUtil.GenerateAndroidManifest();
+            GPGSUtil.UpdateGameInfo();
 
             // refresh assets, and we're done
             AssetDatabase.Refresh();
