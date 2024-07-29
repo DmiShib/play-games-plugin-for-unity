@@ -340,6 +340,14 @@ namespace GooglePlayGames
             mClient.RequestServerSideAccess(webClientId, forceRefreshToken, callback);
         }
 
+
+        public void RequestRecallAccess(Action<RecallAccess> callback)
+        {
+            Misc.CheckNotNull(callback);
+
+            mClient.RequestRecallAccessToken(callback);
+        }
+
         /// <summary>
         /// Loads the users.
         /// </summary>
